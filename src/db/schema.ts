@@ -13,8 +13,10 @@ export const warningTypeEnum = pgEnum('warning_type', ['approaching_limit', 'exc
 export const users = pgTable('users', {
   id: uuid('id').defaultRandom().primaryKey(),
   phoneNumber: varchar('phone_number', { length: 15 }).unique().notNull(),
-   password: varchar('password', { length: 255 }).notNull(), // 👈 Add this
-  name: varchar('name', { length: 100 }).notNull().default(''),
+  password: varchar('password', { length: 255 }).notNull(),
+  firstName: varchar('first_name', { length: 100 }).notNull().default(''),
+  lastName: varchar('last_name', { length: 100 }).notNull().default(''),
+  name: varchar('name', { length: 200 }).notNull().default(''),
   village: varchar('village', { length: 100 }),
   isTreatmentGroup: boolean('is_treatment_group').default(false),
   hasCompletedOnboarding: boolean('has_completed_onboarding').default(false),
@@ -42,6 +44,7 @@ export const pastSeasonData = pgTable('past_season_data', {
   advanceTaken: decimal('advance_taken', { precision: 12, scale: 2 }),
   daysWorked: integer('days_worked'),
   arrearsAmount: decimal('arrears_amount', { precision: 12, scale: 2 }),
+  plannedAdvance: decimal('planned_advance', { precision: 12, scale: 2 }),
   createdAt: timestamp('created_at').defaultNow(),
 });
 
@@ -95,6 +98,7 @@ export const advances = pgTable('advances', {
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
   seasonYear: varchar('season_year', { length: 10 }).notNull(),
   plannedAmount: decimal('planned_amount', { precision: 12, scale: 2 }).default('0'),
+  priorityAdvanceAmount: decimal('priority_advance_amount', { precision: 12, scale: 2 }).default('0'),
   totalTakenAmount: decimal('total_taken_amount', { precision: 12, scale: 2 }).default('0'),
   totalRepaidAmount: decimal('total_repaid_amount', { precision: 12, scale: 2 }).default('0'),
   remainingAmount: decimal('remaining_amount', { precision: 12, scale: 2 }).default('0'),
@@ -179,7 +183,7 @@ export const quizAttemptsRelations = relations(quizAttempts, ({ one }) => ({
 export const prioritizingGame = pgTable('prioritizing_game', {
   id: uuid('id').defaultRandom().primaryKey(),
   userId: uuid('user_id').references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  itemName: varchar('item_name', { length: 100 }).notNull(),
+  itemName: varchar('item_name', { length: 255 }).notNull(),
   isMustHave: boolean('is_must_have').notNull(),
   createdAt: timestamp('created_at').defaultNow(),
 });

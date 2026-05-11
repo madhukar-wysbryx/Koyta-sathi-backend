@@ -5,49 +5,49 @@ import { eq, desc } from 'drizzle-orm';
 
 const QUIZ_DATA = [
   {
-    questionText: "Budget banana ka pehla step kya hai?",
-    optionA: "Kharch karne lag jao",
-    optionB: "Financial goals set karna",
-    optionC: "Dusro se udhaar lena",
-    optionD: "Kuch mat karo",
+    questionText: "What is the first step to making a budget?",
+    optionA: "Start spending right away",
+    optionB: "Set financial goals",
+    optionC: "Borrow money from others",
+    optionD: "Do nothing",
     correctAnswer: "option_b",
-    explanation: "Pehle goal set karo, fir plan banao! Isse pata chalega ki tumhe kitna paisa chahiye."
+    explanation: "Set your goals first, then make a plan. This helps you understand how much money you need."
   },
   {
-    questionText: "Geeta Tai budget follow kaise karti hai?",
-    optionA: "Yaad rakh kar",
-    optionB: "Kuch nahi karti",
-    optionC: "Income aur spending ko track karke",
-    optionD: "Sirf soch kar",
+    questionText: "How does Geeta Tai follow her budget?",
+    optionA: "By remembering everything",
+    optionB: "She does not follow one",
+    optionC: "By tracking her income and spending",
+    optionD: "By thinking about it",
     correctAnswer: "option_c",
-    explanation: "Geeta Tai likh kar track karti hai — plan vs actual! Isse pata chal jata hai ki kahan zyada kharch ho raha hai."
+    explanation: "Geeta Tai writes things down and tracks her plan vs what actually happens. This helps her see where she is spending too much."
   },
   {
-    questionText: "Agar expenses income se zyada hai toh kya karna chahiye?",
-    optionA: "Aur udhaar lo",
-    optionB: "Expenses kam karo",
-    optionC: "Kuch mat karo",
-    optionD: "Gussa karo",
+    questionText: "If your expenses are more than your income, what should you do?",
+    optionA: "Borrow more money",
+    optionB: "Reduce your expenses",
+    optionC: "Do nothing",
+    optionD: "Get angry",
     correctAnswer: "option_b",
-    explanation: "Expenses kam karna ya income badhana — do hi raaste hain! Pehle dekho kahan kam kar sakte ho."
+    explanation: "Reducing expenses or increasing income are the two options. First look at where you can cut back."
   },
   {
-    questionText: "Budget mein saving ka step kaunsa hai?",
-    optionA: "Pehla",
-    optionB: "Doosra",
-    optionC: "Teesra",
-    optionD: "Aakhri",
+    questionText: "Which step in budgeting involves deciding how much to save?",
+    optionA: "First step",
+    optionB: "Second step",
+    optionC: "Third step",
+    optionD: "Last step",
     correctAnswer: "option_c",
-    explanation: "Income estimate karne ke baad saving decide karo! Pehle bachao, fir kharch karo."
+    explanation: "After estimating your income, decide how much to save. Save first, then spend."
   },
   {
-    questionText: "Priority plan mein sabse pehle kya karna chahiye?",
-    optionA: "Naya phone lena",
-    optionB: "Zaroori cheezein identify karna",
-    optionC: "Chhutti ki planning",
-    optionD: "Dosto ko khilana",
+    questionText: "What should you do first when making a priority plan?",
+    optionA: "Buy a new phone",
+    optionB: "Identify the most essential needs",
+    optionC: "Plan a holiday",
+    optionD: "Treat your friends",
     correctAnswer: "option_b",
-    explanation: "Pehle dekho — khana, dawa, fees jaise zaroori kaam. Baki cheezein baad mein."
+    explanation: "First identify essential needs like food, medicine, and school fees. Other things can come later."
   }
 ];
 
@@ -67,6 +67,7 @@ export class QuizService {
       id: q.id,
       questionText: q.questionText,
       options: [q.optionA, q.optionB, q.optionC, q.optionD],
+      correctAnswer: q.correctAnswer,
     }));
   }
 
@@ -84,6 +85,7 @@ export class QuizService {
       } else {
         wrongDetails.push({
           question: q.questionText,
+          options: [q.optionA, q.optionB, q.optionC, q.optionD],
           userAnswer: userAnswer,
           correctAnswer: q.correctAnswer,
           explanation: q.explanation,
@@ -105,7 +107,7 @@ export class QuizService {
       total: questions.length,
       percentage: Math.round((score / questions.length) * 100),
       wrongAnswers: wrongDetails,
-      passed: score >= 3,
+      passed: score >= Math.ceil(questions.length / 2),
     };
   }
 

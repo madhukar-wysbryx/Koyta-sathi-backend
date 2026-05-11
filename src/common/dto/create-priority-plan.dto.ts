@@ -1,4 +1,4 @@
-import { IsString, IsArray, ValidateNested, IsNumber, Min } from 'class-validator';
+import { IsString, IsArray, ValidateNested, IsNumber, IsOptional, Min } from 'class-validator';
 import { Type } from 'class-transformer';
 
 class PriorityItemDto {
@@ -18,4 +18,9 @@ export class CreatePriorityPlanDto {
   @ValidateNested({ each: true })
   @Type(() => PriorityItemDto)
   items: PriorityItemDto[];
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  priorityAdvanceAmount?: number;
 }

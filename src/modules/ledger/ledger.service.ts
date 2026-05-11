@@ -47,6 +47,7 @@ export class LedgerService {
     }
     
     const plannedAmount = Number(currentAdvance[0].plannedAmount);
+    const priorityAdvanceAmount = Number(currentAdvance[0].priorityAdvanceAmount) || plannedAmount;
     let visualPercentage = (newRemainingAmount / plannedAmount) * 100;
     visualPercentage = Math.min(Math.max(visualPercentage, 0), 100);
     
@@ -71,27 +72,31 @@ export class LedgerService {
         updatedAt: new Date()
       })
       .where(eq(advances.id, currentAdvance[0].id));
-    
-    if (visualPercentage >= 90 && visualPercentage < 100) {
-      // @ts-ignore
-      await db.insert(warningLogs).values({
-        userId: userId,
-        advanceId: currentAdvance[0].id,
-        warningType: 'approaching_limit',
-        currentAmount: newRemainingAmount.toString(),
-        limitAmount: plannedAmount.toString(),
-        isRead: false,
-      });
-    } else if (visualPercentage >= 100) {
-      // @ts-ignore
-      await db.insert(warningLogs).values({
-        userId: userId,
-        advanceId: currentAdvance[0].id,
-        warningType: 'exceeded_limit',
-        currentAmount: newRemainingAmount.toString(),
-        limitAmount: plannedAmount.toString(),
-        isRead: false,
-      });
+
+    // Warn against priorityAdvanceAmount (the self-declared limit)
+    const usagePct = (newTakenAmount / priorityAdvanceAmount) * 100;
+    if (data.type === 'taken') {
+      if (usagePct >= 100) {
+        // @ts-ignore
+        await db.insert(warningLogs).values({
+          userId: userId,
+          advanceId: currentAdvance[0].id,
+          warningType: 'exceeded_limit',
+          currentAmount: newTakenAmount.toString(),
+          limitAmount: priorityAdvanceAmount.toString(),
+          isRead: false,
+        });
+      } else if (usagePct >= 80) {
+        // @ts-ignore
+        await db.insert(warningLogs).values({
+          userId: userId,
+          advanceId: currentAdvance[0].id,
+          warningType: 'approaching_limit',
+          currentAmount: newTakenAmount.toString(),
+          limitAmount: priorityAdvanceAmount.toString(),
+          isRead: false,
+        });
+      }
     }
     
     return entry;
@@ -117,11 +122,13 @@ export class LedgerService {
     if (currentAdvance.length) {
       const remaining = Number(currentAdvance[0].remainingAmount);
       const planned = Number(currentAdvance[0].plannedAmount);
+      const priorityAdvance = Number(currentAdvance[0].priorityAdvanceAmount);
       summary = {
         totalAdvance: Number(currentAdvance[0].totalTakenAmount),
         totalRepaid: Number(currentAdvance[0].totalRepaidAmount),
         remaining: remaining,
         plannedAmount: planned,
+        priorityAdvance: priorityAdvance,
         visualPercentage: planned > 0 ? Math.round((remaining / planned) * 100) : 0,
       };
     }
@@ -135,9 +142,19 @@ export class LedgerService {
     const warnings = await db.select()
       .from(warningLogs)
       .where(eq(warningLogs.userId, userId))
-      .orderBy(desc(warningLogs.createdAt));
-    
-    return warnings;
+      .orderBy(desc(warningLogs.createdAt))
+      .limit(1);
+
+    if (!warnings.length || warnings[0].isRead) return { message: null };
+
+    const w = warnings[0];
+    const current = Number(w.currentAmount).toLocaleString('en-IN');
+    const limit = Number(w.limitAmount).toLocaleString('en-IN');
+    const message = w.warningType === 'exceeded_limit'
+      ? `You have exceeded your priority advance limit. Taken ₹${current} of ₹${limit} limit.`
+      : `You are approaching your priority advance limit. Taken ₹${current} of ₹${limit} limit.`;
+
+    return { message, warningType: w.warningType, id: w.id };
   }
 
   async markWarningRead(warningId: string) {

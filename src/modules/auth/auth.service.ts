@@ -12,76 +12,66 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signup(phoneNumber: string, password: string, name: string, village: string) {
+  async signup(phoneNumber: string, password: string, firstName: string, lastName: string, village: string) {
     const db = this.dbService.getDb();
-    
-    // Check if user exists
-    const existingUser = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
-    
-    if (existingUser.length > 0) {
+
+    const existing = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
+    if (existing.length > 0) {
       throw new BadRequestException('User already exists');
     }
-    
-    // Hash password
+
     const hashedPassword = await bcrypt.hash(password, 10);
-    
-    // Create user
-    const newUser = await db.insert(users).values({
+    const fullName = `${firstName.trim()} ${lastName.trim()}`.trim();
+
+    const [newUser] = await db.insert(users).values({
       phoneNumber,
       password: hashedPassword,
-      name: name || '',
+      firstName: firstName.trim(),
+      lastName: lastName.trim(),
+      name: fullName,
       village: village || '',
       hasCompletedOnboarding: false,
     }).returning();
-    
-    // Generate token
-    const token = this.jwtService.sign({ 
-      userId: newUser[0].id, 
-      phoneNumber: newUser[0].phoneNumber 
-    });
-    
+
+    const token = this.jwtService.sign({ userId: newUser.id, phoneNumber: newUser.phoneNumber });
+
     return {
       success: true,
       token,
       user: {
-        id: newUser[0].id,
-        phoneNumber: newUser[0].phoneNumber,
-        name: newUser[0].name,
-        village: newUser[0].village,
-        hasCompletedOnboarding: newUser[0].hasCompletedOnboarding,
+        id: newUser.id,
+        phoneNumber: newUser.phoneNumber,
+        firstName: newUser.firstName,
+        lastName: newUser.lastName,
+        name: newUser.name,
+        village: newUser.village,
+        hasCompletedOnboarding: newUser.hasCompletedOnboarding,
       },
     };
   }
 
   async login(phoneNumber: string, password: string) {
     const db = this.dbService.getDb();
-    
-    const user = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
-    
-    if (!user.length) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    
-    const isPasswordValid = await bcrypt.compare(password, user[0].password);
-    
-    if (!isPasswordValid) {
-      throw new UnauthorizedException('Invalid credentials');
-    }
-    
-    const token = this.jwtService.sign({ 
-      userId: user[0].id, 
-      phoneNumber: user[0].phoneNumber 
-    });
-    
+
+    const [user] = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
+    if (!user) throw new UnauthorizedException('Invalid credentials');
+
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) throw new UnauthorizedException('Invalid credentials');
+
+    const token = this.jwtService.sign({ userId: user.id, phoneNumber: user.phoneNumber });
+
     return {
       success: true,
       token,
       user: {
-        id: user[0].id,
-        phoneNumber: user[0].phoneNumber,
-        name: user[0].name,
-        village: user[0].village,
-        hasCompletedOnboarding: user[0].hasCompletedOnboarding,
+        id: user.id,
+        phoneNumber: user.phoneNumber,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        name: user.name,
+        village: user.village,
+        hasCompletedOnboarding: user.hasCompletedOnboarding,
       },
     };
   }

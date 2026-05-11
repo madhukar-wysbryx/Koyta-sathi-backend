@@ -16,7 +16,7 @@ export class UserController {
   @Post('profile')
   async updateProfile(
     @CurrentUser() user: { id: string },
-    @Body() body: { name: string; village: string }
+    @Body() body: { firstName: string; lastName: string; village: string },
   ) {
     return this.userService.updateProfile(user.id, body);
   }

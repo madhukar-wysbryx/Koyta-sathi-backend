@@ -10,8 +10,12 @@ export class SignupDto {
   password: string;
 
   @IsString()
-  @Length(2, 100, { message: 'name must be at least 2 characters' })
-  name: string;
+  @Length(2, 100, { message: 'firstName must be at least 2 characters' })
+  firstName: string;
+
+  @IsString()
+  @IsNotEmpty({ message: 'lastName is required' })
+  lastName: string;
 
   @IsString()
   @IsNotEmpty()
