@@ -20,9 +20,9 @@ interface StoryConfig {
 
 const STORY_CONFIGS: Record<StoryKey, StoryConfig> = {
   geeta_1: {
-    step: 4,
+    step: 2,
     nextPath: "/story/geeta-2",
-    backPath: "/recall-2025",
+    backPath: "/onboarding",
     paragraphs: [
       "Geeta tai has been a koyta cutter for fifteen years. Every season she travels from Osmanabad to the sugarcane fields of Solapur with her husband and two children.",
       "In her early years, Geeta would take whatever advance the mukaddam offered — sometimes ₹80,000 or more — thinking more money means less worry. But by March, she found herself still working just to repay the debt, with nothing extra left.",
@@ -33,7 +33,7 @@ const STORY_CONFIGS: Record<StoryKey, StoryConfig> = {
     moral: "Taking only what you need is the first step to keeping what you earn.",
   },
   geeta_2: {
-    step: 5,
+    step: 3,
     nextPath: "/quiz",
     backPath: "/story/geeta-1",
     paragraphs: [
@@ -46,7 +46,7 @@ const STORY_CONFIGS: Record<StoryKey, StoryConfig> = {
     ],
   },
   gauri: {
-    step: 7,
+    step: 5,
     nextPath: "/story/jagdish",
     backPath: "/quiz",
     paragraphs: [
@@ -59,8 +59,8 @@ const STORY_CONFIGS: Record<StoryKey, StoryConfig> = {
     moral: "Plan big expenses one season ahead. A budget is not a restriction — it is preparation.",
   },
   jagdish: {
-    step: 8,
-    nextPath: "/advance-plan",
+    step: 6,
+    nextPath: "/priority-quiz",
     backPath: "/story/gauri",
     paragraphs: [
       "Jagdish is a tractor driver who works with a koyta toli of twelve cutters. Two years ago he started writing down every advance installment on a small notebook.",
