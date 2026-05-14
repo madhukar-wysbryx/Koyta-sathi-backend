@@ -13,6 +13,7 @@ export class PastSeasonService {
     advanceTaken: number;
     daysWorked: number;
     arrearsAmount: number;
+    advancePendingAtStart: number;
     plannedAdvance?: number;
   }) {
     const db = this.dbService.getDb();
@@ -24,6 +25,7 @@ export class PastSeasonService {
       advanceTaken: data.advanceTaken.toString(),
       daysWorked: data.daysWorked,
       arrearsAmount: data.arrearsAmount.toString(),
+      advancePendingAtStart: data.advancePendingAtStart.toString(),
       plannedAdvance: data.plannedAdvance ? data.plannedAdvance.toString() : null,
     }).returning();
     

@@ -75,4 +75,18 @@ export class AuthService {
       },
     };
   }
+
+  async resetPassword(phoneNumber: string, newPassword: string) {
+    const db = this.dbService.getDb();
+
+    const [user] = await db.select().from(users).where(eq(users.phoneNumber, phoneNumber));
+    if (!user) throw new BadRequestException('No account found with this phone number');
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await db.update(users)
+      .set({ password: hashedPassword, updatedAt: new Date() })
+      .where(eq(users.phoneNumber, phoneNumber));
+
+    return { success: true, message: 'Password updated successfully' };
+  }
 }

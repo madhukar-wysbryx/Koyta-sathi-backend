@@ -45,6 +45,7 @@ export const pastSeasonData = pgTable('past_season_data', {
   daysWorked: integer('days_worked'),
   arrearsAmount: decimal('arrears_amount', { precision: 12, scale: 2 }),
   plannedAdvance: decimal('planned_advance', { precision: 12, scale: 2 }),
+  advancePendingAtStart: decimal('advance_pending_at_start', { precision: 12, scale: 2 }),
   createdAt: timestamp('created_at').defaultNow(),
 });
 

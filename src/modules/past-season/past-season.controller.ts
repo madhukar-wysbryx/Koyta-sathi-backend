@@ -29,7 +29,7 @@ export class PastSeasonController {
   @Post()
   async addPastSeasonData(
     @CurrentUser() user: { id: string },
-    @Body() body: { seasonYear: string; advanceTaken: number; daysWorked: number; arrearsAmount: number }
+    @Body() body: { seasonYear: string; advanceTaken: number; daysWorked: number; arrearsAmount: number; advancePendingAtStart: number }
   ) {
     return this.pastSeasonService.addPastSeasonData(user.id, body);
   }

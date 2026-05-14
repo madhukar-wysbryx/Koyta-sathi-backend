@@ -31,3 +31,13 @@ export class LoginDto {
   @IsNotEmpty()
   password: string;
 }
+
+export class ResetPasswordDto {
+  @IsString()
+  @Matches(/^\d{10}$/, { message: 'phoneNumber must be 10 digits' })
+  phoneNumber: string;
+
+  @IsString()
+  @Length(6, 100, { message: 'password must be at least 6 characters' })
+  newPassword: string;
+}

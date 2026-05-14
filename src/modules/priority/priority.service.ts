@@ -118,9 +118,8 @@ export class PriorityService {
 
   async savePrioritizingGame(userId: string, items: { itemName: string; isMustHave: boolean }[]) {
     const db = this.dbService.getDb();
-    // Dynamically import to avoid circular dependency
     const { prioritizingGame } = await import('../../db/schema');
-    
+
     for (const item of items) {
       // @ts-ignore
       await db.insert(prioritizingGame).values({
@@ -129,7 +128,7 @@ export class PriorityService {
         isMustHave: item.isMustHave,
       });
     }
-    
+
     return { success: true, count: items.length };
   }
 
@@ -216,7 +215,7 @@ export class PriorityService {
       if (totalArrears > 0) {
         // Breakdown: priority advance + arrears
         doc.fillColor(GRAY).fontSize(9).font('Helvetica')
-          .text(`Priority Advance:  Rs. ${priorityAdvance.toLocaleString('en-IN')}`, 65, 208);
+          .text(`Planned Advance:  Rs. ${priorityAdvance.toLocaleString('en-IN')}`, 65, 208);
         doc.text(`Arrears from last ${pastSeasons.length} season(s):  Rs. ${totalArrears.toLocaleString('en-IN')}`, 65, 220);
         // Per-season arrears detail
         pastSeasons.forEach((s: any, i: number) => {
@@ -262,7 +261,7 @@ export class PriorityService {
       // Total row
       doc.rect(50, y, pageWidth, 24).fill(GREEN);
       doc.fillColor('white').fontSize(11).font('Helvetica-Bold')
-        .text('Total Estimated Expenses', 80, y + 6)
+        .text('Total Priority Expenses', 80, y + 6)
         .text(`Rs. ${totalEstimated.toLocaleString('en-IN')}`, 380, y + 6, { width: 150, align: 'right' });
       y += 34;
 
