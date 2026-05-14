@@ -1,0 +1,11 @@
+node_modules
+dist
+.sst
+.env
+.env.local
+.env.*.local
+*.tsbuildinfo
+_client-artifacts
+.DS_Store
+Thumbs.db
+*.zip

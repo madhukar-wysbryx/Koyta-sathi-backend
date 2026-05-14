@@ -1,0 +1,26 @@
+{
+  "name": "Koyta-Sathi Tracker",
+  "short_name": "KS Tracker",
+  "description": "Daily wage and advance tracker for sugarcane koyta cutters — SOPPECOM × Harvard Research",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#4f46e5",
+  "lang": "mr",
+  "icons": [
+    {
+      "src": "/icons/tracker-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/tracker-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["finance", "productivity"]
+}

@@ -1,0 +1,15 @@
+Hi team, please find attached a list of semi-final design changes to the budgeting app based on a collaborator call I had today. After this the only changes will be Marathi translation + anything that comes up post internal testing:
+1/ on the onboarding screen: allow user to add first name and last name in separate fields
+2/ on the onboarding screen: village name -- should ideally be dropdown (will wait till villages are finalized)
+3/ budgeting story assessment -- quiz score algorithm needs to be simplified. i.e. 1 point for each "correct" answer
+4/ prioritization story assessment -- there should be no score provided after. but the expert tip should show up on the screen when users are doing the must-have/can wait exercise. Note that the expense categories on this quiz right now are temporary. we will update them to make them even more context relevant
+5/ for the arrears recall exercise, when we provide them with a repayment exercise, make very clear on the app that this is a BROAD repayment timeline estimate based on last two years' data
+6/ making a priority plan should not be optional as it is currently on the app mockup
+7/ prioritization exercise should operate in two stages:
+- first user lists up to 10 categories household plans to spend advance total on
+- then in next screen does the must have/can wait categorization for each category
+- thus gets a revised priority advance amount estimate
+8/ post prioritization exercise, we should generate a budget pdf based on the users expenses listed in step 7 and total borrowing amount goal, the printout will be provided to users so that they can keep this as a plan to loosely adhere to over season
+9/ advance ledger --allow users to record advance installments already taken this season - i.e there should be no restriction on date, retrospective installment logging should be allowed.
+
+once we have this finalized in English, I'll get you the Marathi translations! happy to get on a call whenever to discuss any of the inputs above, in particular 7/.

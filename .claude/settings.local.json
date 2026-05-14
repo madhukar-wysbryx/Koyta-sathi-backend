@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git worktree *)",
+      "Bash(git checkout *)",
+      "Bash(git rm *)",
+      "Bash(git commit *)",
+      "Bash(npm --version)",
+      "Bash(npm list *)",
+      "Bash(npm root *)",
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\Ayush Kashyap\\\\Desktop\\\\Koyta-sathi-backend\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)"
+    ]
+  }
+}

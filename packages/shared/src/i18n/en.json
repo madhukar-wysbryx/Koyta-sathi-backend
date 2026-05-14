@@ -1,0 +1,206 @@
+{
+  "common": {
+    "continue": "Continue",
+    "save": "Save",
+    "back": "Back",
+    "close": "Close",
+    "logout": "Logout",
+    "delete_my_data": "Delete my data",
+    "language": "Language",
+    "loading": "Loading...",
+    "error": "Something went wrong. Please try again.",
+    "rupee": "₹"
+  },
+  "auth": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "new_password": "New Password",
+    "confirm_password": "Confirm Password",
+    "login_cta": "Sign In",
+    "change_password_title": "Set your new password",
+    "change_password_cta": "Set Password",
+    "login_error": "Invalid email or password.",
+    "first_login_note": "This is your first login. Please set a new password."
+  },
+  "budget": {
+    "welcome": {
+      "title": "Welcome to Koyta-Sathi",
+      "subtitle": "Your financial planning companion for the season ahead.",
+      "research_note": "This app is part of a research study by SOPPECOM and Harvard University.",
+      "consent_research": "I agree that my data will be used for research purposes and deleted by April 2027.",
+      "consent_advice": "I understand this is not financial advice.",
+      "cta": "I Understand & Agree"
+    },
+    "onboarding": {
+      "title": "Tell us about yourself",
+      "first_name": "First Name",
+      "last_name": "Last Name",
+      "village": "Your Village",
+      "village_placeholder": "Select your village"
+    },
+    "recall": {
+      "title_2024": "Past Season — 2024-25",
+      "title_2025": "Past Season — 2025-26",
+      "advance_pending_start": "Advance pending at start (₹)",
+      "advance_taken": "Total advance taken (₹)",
+      "months_worked": "Months worked",
+      "arrears_remaining": "Arrears remaining (₹)"
+    },
+    "story_geeta_1": {
+      "title": "Geeta Tai's Story",
+      "module": "Learn from Her Wisdom"
+    },
+    "story_geeta_2": {
+      "title": "Steps to Make a Budget",
+      "module": "Learn from Her Wisdom"
+    },
+    "story_gauri": {
+      "title": "Gauri's Story",
+      "module": "Staying on Track"
+    },
+    "story_jagdish": {
+      "title": "Jagdish's Story",
+      "module": "Staying on Track"
+    },
+    "quiz": {
+      "title": "Budget Quiz",
+      "subtitle": "Select all the correct answers.",
+      "check": "Check Answers",
+      "score": "You got {{score}} out of {{total}} correct."
+    },
+    "advance_plan": {
+      "title": "Advance Plan 2026",
+      "label": "How much advance do you plan to take? (₹)",
+      "estimate_label": "Estimated repayment time",
+      "estimate_value": "About {{months}} months",
+      "estimate_arrears": "Including ₹{{arrears}} arrears: about {{months}} months",
+      "broad_note": "This is a BROAD estimate based on your last two years' data.",
+      "revise_question": "Would you like to change this amount?",
+      "revise_yes": "Yes, change it",
+      "revise_no": "Looks good"
+    },
+    "priority_intro": {
+      "title": "Priority Plan 2026",
+      "subtitle": "Identify your most important expenses for the year ahead.",
+      "cta": "Start Plan"
+    },
+    "priority_stage1": {
+      "title": "What will you spend on?",
+      "subtitle": "Add up to 10 expense categories.",
+      "category_label": "Category name",
+      "amount_label": "Planned amount (₹)",
+      "add": "Add",
+      "total": "Total planned: ₹{{amount}}",
+      "max_note": "Maximum 10 categories"
+    },
+    "priority_stage2": {
+      "title": "Must Have or Can Wait?",
+      "subtitle": "For each category, decide what you truly need first.",
+      "must": "Must Have",
+      "wait": "Can Wait",
+      "expert_tip": "Expert tip: Prioritise 1. Emergencies, 2. Debt payments, 3. Daily needs (Food), 4. Future goals.",
+      "priority_advance": "Priority Advance Amount",
+      "priority_note": "Plan to take this as your initial advance from the mukaddam. Take additional advances only if needed later.",
+      "cta": "Generate Budget Plan"
+    },
+    "pdf": {
+      "title": "Your Budget Plan is Ready",
+      "download": "Download PDF",
+      "whatsapp": "Share via WhatsApp",
+      "generating": "Generating your plan..."
+    },
+    "ready": {
+      "title": "Ready to Track!",
+      "subtitle": "Your budget plan is set. Now track your advance installments as the season begins.",
+      "cta": "Go to Ledger"
+    },
+    "dashboard": {
+      "title": "Advance Ledger",
+      "total_debt": "Total Debt So Far",
+      "planned_limit": "Planned Limit",
+      "remaining": "Remaining",
+      "add_installment": "+ Add New",
+      "no_entries": "No installments recorded yet.",
+      "warning_90": "You've used over 90% of your planned advance."
+    },
+    "add_installment": {
+      "title": "Add Installment",
+      "amount": "Amount (₹)",
+      "purpose": "Purpose",
+      "date": "Date",
+      "save": "Save Installment",
+      "purposes": {
+        "food": "Food",
+        "seeds": "Seeds",
+        "health": "Health",
+        "travel": "Travel",
+        "debt": "Debt",
+        "other": "Other"
+      }
+    }
+  },
+  "tracker": {
+    "onboarding": {
+      "title": "Set up your Tracker",
+      "koyta_type": "Type of Koyta",
+      "full": "Full",
+      "half": "Half",
+      "advance_this_year": "Advance taken this year (₹)",
+      "outstanding_last_year": "Outstanding from last year (₹)",
+      "migration_days": "Migration distance (days)",
+      "total_advance": "Total Advance: ₹{{amount}}"
+    },
+    "toli": {
+      "title": "Toli Composition",
+      "full_m": "Full Koytas (Men)",
+      "full_w": "Full Koytas (Women)",
+      "half_m": "Half Koytas (Men)",
+      "half_w": "Half Koytas (Women)",
+      "boys": "Boys helping",
+      "girls": "Girls helping",
+      "weighted": "Weighted koyta count: {{count}}"
+    },
+    "vehicle": {
+      "title": "Vehicle Details",
+      "type": "Vehicle Type",
+      "tons": "Tons per vehicle",
+      "rate": "Rate per ton: ₹{{rate}}"
+    },
+    "dashboard": {
+      "debt_remaining": "Total Debt Remaining",
+      "wages_earned": "Total Wages Earned",
+      "repayment_progress": "Repayment Progress",
+      "efficiency": "Efficiency",
+      "toli_size": "Toli Size",
+      "this_week_wages": "This Week's Wages",
+      "days_this_week": "Days Worked This Week"
+    },
+    "entry": {
+      "title": "Add Daily Entry",
+      "date": "Date",
+      "factory": "Factory & Location",
+      "day_status": "Day Status",
+      "start_time": "Start Time",
+      "end_time": "End Time",
+      "vehicles_filled": "Vehicles Filled",
+      "estimated_wages": "Estimated wages today: ₹{{amount}}",
+      "day_types": {
+        "working_day": "Harvesting",
+        "in_transit": "In Transit",
+        "phad_reached": "Reached Phad",
+        "at_phad_no_work": "No Work",
+        "journey_started": "Journey Started"
+      }
+    }
+  },
+  "admin": {
+    "overview": "Overview",
+    "participants": "Participants",
+    "reports": "Reports",
+    "export": "Export Data",
+    "invite": "Invite Participant",
+    "export_cta": "Export All Data",
+    "credential_slip": "Download Credential Slip"
+  }
+}
