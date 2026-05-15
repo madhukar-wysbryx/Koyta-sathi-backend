@@ -4,13 +4,20 @@ import type { BudgetState, Installment, PriorityCategory, SeasonRecall } from "@
 import { EMPTY_BUDGET_STATE, rupeeToPaise, sumMustHavePaise } from "@kothi/shared/types/budget";
 import { api } from "@kothi/shared/lib/api";
 
+export interface PriorityQuizEntry {
+  category: string;
+  choice: "must" | "cant_wait";
+}
+
 interface BudgetStore {
   state: BudgetState;
   isSyncing: boolean;
+  priorityQuizEntries: PriorityQuizEntry[];
 
   // Actions
   setRecall: (year: "2024" | "2025", data: SeasonRecall) => void;
   setQuiz: (selectedIds: string[], scoreCorrect: number) => void;
+  setPriorityQuiz: (entries: PriorityQuizEntry[]) => void;
   setPlanning: (plannedAdvancePaise: number) => void;
   setPriorityCategories: (cats: PriorityCategory[]) => void;
   setInstallments: (items: Installment[]) => void;
@@ -27,6 +34,7 @@ export const useBudgetStore = create<BudgetStore>()(
     (set, get) => ({
       state: EMPTY_BUDGET_STATE,
       isSyncing: false,
+      priorityQuizEntries: [],
 
       setRecall: (year, data) => {
         set((s) => ({
@@ -37,6 +45,10 @@ export const useBudgetStore = create<BudgetStore>()(
           },
         }));
         void get().saveToServer();
+      },
+
+      setPriorityQuiz: (entries) => {
+        set({ priorityQuizEntries: entries });
       },
 
       setQuiz: (selectedIds, scoreCorrect) => {

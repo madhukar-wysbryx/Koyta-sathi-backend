@@ -14,6 +14,8 @@ import { PriorityPlanStage2 } from "../budget/PriorityPlanStage2";
 import { BudgetPdfScreen } from "../budget/BudgetPdfScreen";
 import { ReadyToTrack } from "../budget/ReadyToTrack";
 import { BudgetAppShell } from "../budget/BudgetAppShell";
+import { PriorityQuiz } from "../budget/PriorityQuiz";
+import { PriorityQuizResult } from "../budget/PriorityQuizResult";
 
 export function BudgetShell() {
   const { user, isLoading, hydrate } = useAuth();
@@ -61,6 +63,8 @@ export function BudgetShell() {
       <Route path="/quiz" component={QuizScreen} />
       <Route path="/story/gauri" component={() => <StoryScreen storyKey="gauri" />} />
       <Route path="/story/jagdish" component={() => <StoryScreen storyKey="jagdish" />} />
+      <Route path="/priority-quiz" component={PriorityQuiz} />
+      <Route path="/priority-quiz-result" component={PriorityQuizResult} />
       <Route path="/advance-plan" component={AdvancePlan} />
       <Route path="/priority-intro" component={PriorityPlanIntro} />
       <Route path="/priority-1" component={PriorityPlanStage1} />

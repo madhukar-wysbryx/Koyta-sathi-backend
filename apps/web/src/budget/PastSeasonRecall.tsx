@@ -21,9 +21,9 @@ export function PastSeasonRecall({ year }: Props) {
   const [, navigate] = useLocation();
   const setRecall = useBudgetStore((s) => s.setRecall);
 
-  const stepNum = year === "2024" ? 2 : 3;
-  const nextPath = year === "2024" ? "/recall-2025" : "/story/geeta-1";
-  const backPath = year === "2024" ? "/onboarding" : "/recall-2024";
+  const stepNum = year === "2024" ? 9 : 10;
+  const nextPath = year === "2024" ? "/recall-2025" : "/advance-plan";
+  const backPath = year === "2024" ? "/priority-quiz-result" : "/recall-2024";
   const titleKey = year === "2024" ? "budget.recall.title_2024" : "budget.recall.title_2025";
 
   const {

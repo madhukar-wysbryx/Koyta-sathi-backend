@@ -36,7 +36,7 @@ export function OnboardingProfile() {
       // non-blocking — profile saves best-effort
     }
     events.track("wizard_step_completed", { wizard: "budget", step: 2, stepName: "onboarding" });
-    navigate("/recall-2024");
+    navigate("/story/geeta-1");
   };
 
   return (

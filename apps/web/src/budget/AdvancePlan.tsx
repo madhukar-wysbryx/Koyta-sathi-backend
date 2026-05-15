@@ -30,14 +30,14 @@ export function AdvancePlan() {
   };
 
   const handleContinue = () => {
-    events.track("wizard_step_completed", { wizard: "budget", step: 10, stepName: "advance_plan" });
+    events.track("wizard_step_completed", { wizard: "budget", step: 12, stepName: "advance_plan" });
     navigate("/priority-intro");
   };
 
   return (
     <div className="screen">
       <div className="wizard-header">
-        <button className="btn btn-ghost" style={{ padding: "8px 4px" }} onClick={() => navigate("/story/jagdish")}>
+        <button className="btn btn-ghost" style={{ padding: "8px 4px" }} onClick={() => navigate("/recall-2025")}>
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <polyline points="15 18 9 12 15 6" />
           </svg>
@@ -47,7 +47,7 @@ export function AdvancePlan() {
 
       <div className="screen-body">
         <div className="animate-fade-up">
-          <p className="story-module-tag">Step 9 of 17</p>
+          <p className="story-module-tag">Step 11 of 19</p>
           <h2>{t("budget.advance_plan.title")}</h2>
         </div>
 

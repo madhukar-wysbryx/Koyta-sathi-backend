@@ -97,7 +97,7 @@ export function QuizScreen() {
   };
 
   const handleContinue = () => {
-    events.track("wizard_step_completed", { wizard: "budget", step: 7, stepName: "quiz" });
+    events.track("wizard_step_completed", { wizard: "budget", step: 5, stepName: "quiz" });
     navigate("/story/gauri");
   };
 
@@ -121,7 +121,7 @@ export function QuizScreen() {
 
       <div className="screen-body">
         <div className="animate-fade-up">
-          <p className="story-module-tag">Step 6 of 17</p>
+          <p className="story-module-tag">Step 4 of 17</p>
           <h2>{t("budget.quiz.title")}</h2>
           <p style={{ color: "var(--color-text-secondary)", fontSize: 15, marginTop: 4 }}>
             {t("budget.quiz.subtitle")}
