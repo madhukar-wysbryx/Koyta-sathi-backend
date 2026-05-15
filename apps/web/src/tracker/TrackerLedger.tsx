@@ -64,7 +64,7 @@ export function TrackerLedger() {
       wagesEarnedToliPaise: wages.toliPaise,
       wagesEarnedKoytaPaise: wages.koytaPaise,
     });
-    events.track("daily_record_added", { dayType: data.dayType });
+    events.track("daily_record_logged", { dayType: data.dayType });
     reset({ occurredOn: new Date().toISOString().split("T")[0], dayType: "working_day" });
     setShowAdd(false);
   };
