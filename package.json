@@ -4,6 +4,7 @@
   "packageManager": "pnpm@9.15.0",
   "scripts": {
     "dev": "pnpm --filter web dev",
+    "dev:local": "pnpm dev:dynamo && concurrently -n api,web -c cyan,green \"pnpm dev:api:local\" \"pnpm dev\"",
     "dev:api": "sst dev --stage dev",
     "dev:dynamo": "docker compose up -d dynamodb-local",
     "dev:api:local": "dotenv -e packages/api/.env.local -- tsx packages/api/src/server.ts",
@@ -17,6 +18,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "concurrently": "^9.1.2",
     "dotenv-cli": "^7.4.2",
     "sst": "^3.5.0",
     "tsx": "^4.19.2",
