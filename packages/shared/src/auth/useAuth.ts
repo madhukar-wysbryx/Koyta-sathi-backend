@@ -140,3 +140,13 @@ export async function getIdToken(): Promise<string | null> {
     return null;
   }
 }
+
+// Logout when the page becomes hidden — prevents session bleed on shared phones.
+// Call once on app boot (main.tsx does this).
+export function setupTabCloseLogout() {
+  window.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      void useAuth.getState().logout();
+    }
+  });
+}

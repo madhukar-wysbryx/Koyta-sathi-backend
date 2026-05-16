@@ -1,11 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { configureAmplify, events } from "@kothi/shared";
+import { setupTabCloseLogout } from "@kothi/shared/auth";
 import { initI18n } from "@kothi/shared/i18n";
 import "./index.css";
 
 configureAmplify();
 initI18n();
+setupTabCloseLogout();
 
 const hostname = window.location.hostname;
 const shellParam = new URLSearchParams(window.location.search).get("shell");

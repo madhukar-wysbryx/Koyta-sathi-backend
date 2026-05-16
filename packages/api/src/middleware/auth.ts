@@ -1,5 +1,5 @@
 import { createRemoteJWKSet, jwtVerify } from "jose";
-import type { Context, MiddlewareHandler } from "hono";
+import type { MiddlewareHandler } from "hono";
 
 interface AuthPayload {
   userId: string;
@@ -23,13 +23,21 @@ function getJwks(userPoolId: string, region: string) {
   return jwks;
 }
 
+// Local dev bypass: set DEV_AUTH_BYPASS=true in .env.local
+const DEV_AUTH_BYPASS = process.env.DEV_AUTH_BYPASS === "true";
+
 export const requireAuth: MiddlewareHandler = async (c, next) => {
+  if (DEV_AUTH_BYPASS) {
+    c.set("auth", { userId: "dev-user-001", email: "dev@koyta.local", role: "participant" });
+    await next();
+    return;
+  }
   const authHeader = c.req.header("Authorization");
   if (!authHeader?.startsWith("Bearer ")) {
     return c.json({ error: "Unauthorized" }, 401);
   }
   const token = authHeader.slice(7);
-  const userPoolId = process.env.COGNITO_USER_POOL_ID ?? "";
+  const userPoolId = process.env.USER_POOL_ID ?? "";
   const region = process.env.AWS_REGION ?? "ap-south-1";
   try {
     const { payload } = await jwtVerify(token, getJwks(userPoolId, region));

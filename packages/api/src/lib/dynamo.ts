@@ -8,11 +8,21 @@ const stage = process.env.STAGE ?? "dev";
 export const tableNames = {
   users: process.env.USERS_TABLE ?? `kothi-${stage}-users`,
   budgetState: process.env.BUDGET_STATE_TABLE ?? `kothi-${stage}-budget_state`,
-  trackerState: process.env.TRACKER_STATE_TABLE ?? `kothi-${stage}-tracker_state`,
+  trackerOnboarding: process.env.TRACKER_ONBOARDING_TABLE ?? `kothi-${stage}-tracker_onboarding`,
+  dailyRecords: process.env.DAILY_RECORDS_TABLE ?? `kothi-${stage}-daily_records`,
+  slips: process.env.SLIPS_TABLE ?? `kothi-${stage}-slips`,
   events: process.env.EVENTS_TABLE ?? `kothi-${stage}-events`,
 };
 
-const client = new DynamoDBClient({ region: process.env.AWS_REGION ?? "ap-south-1" });
+const clientConfig = process.env.DYNAMODB_ENDPOINT
+  ? {
+      region: process.env.AWS_REGION ?? "ap-south-1",
+      endpoint: process.env.DYNAMODB_ENDPOINT,
+      credentials: { accessKeyId: "local", secretAccessKey: "local" },
+    }
+  : { region: process.env.AWS_REGION ?? "ap-south-1" };
+
+const client = new DynamoDBClient(clientConfig);
 export const ddb = DynamoDBDocumentClient.from(client, {
   marshallOptions: { removeUndefinedValues: true },
 });

@@ -4,10 +4,23 @@ export const userPool = new sst.aws.CognitoUserPool("UserPool", {
   usernames: ["email"],
   password: {
     minLength: 8,
-    requireNumbers: false,
+    requireNumbers: true,
     requireSymbols: false,
-    requireUppercase: false,
-    requireLowercase: false,
+    requireUppercase: true,
+    requireLowercase: true,
+  },
+  transform: {
+    userPool: (args) => {
+      // custom:role is read by Hono auth middleware to gate admin routes
+      args.schemas = [
+        {
+          name: "role",
+          attributeDataType: "String",
+          mutable: true,
+          stringAttributeConstraints: { minLength: "1", maxLength: "50" },
+        },
+      ];
+    },
   },
 });
 

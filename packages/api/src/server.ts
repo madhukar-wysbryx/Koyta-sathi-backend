@@ -1,4 +1,4 @@
-import { handle } from "hono/aws-lambda";
+import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { logger } from "hono/logger";
 import { errorHandler } from "./middleware/error.js";
@@ -25,4 +25,7 @@ app.route("/slips", slipsRouter);
 app.route("/events", eventsRouter);
 app.route("/admin", adminRouter);
 
-export const handler = handle(app);
+const port = Number(process.env.PORT ?? 3001);
+console.log(`API running on http://localhost:${port}`);
+
+serve({ fetch: app.fetch, port });

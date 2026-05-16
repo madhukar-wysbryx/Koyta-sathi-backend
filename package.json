@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "pnpm --filter web dev",
     "dev:api": "sst dev --stage dev",
+    "dev:dynamo": "docker compose up -d dynamodb-local",
+    "dev:api:local": "dotenv -e packages/api/.env.local -- tsx packages/api/src/server.ts",
+    "db:setup": "dotenv -e packages/api/.env.local -- tsx scripts/create-tables-local.ts",
     "build": "pnpm --filter web build",
     "typecheck": "pnpm -r exec tsc --noEmit",
     "lint": "biome ci .",
@@ -14,7 +17,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "dotenv-cli": "^7.4.2",
     "sst": "^3.5.0",
+    "tsx": "^4.19.2",
     "typescript": "^5.7.2",
     "vitest": "^2.1.8"
   }

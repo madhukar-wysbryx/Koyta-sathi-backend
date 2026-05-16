@@ -31,34 +31,53 @@ export const useTrackerStore = create<TrackerStore>()(
 
       setOnboarding: (data) => {
         set((s) => ({ state: { ...s.state, onboarding: data, updatedAt: new Date().toISOString() } }));
-        void get().saveToServer();
+        // PUT only the onboarding blob — daily records are stored individually
+        void api.put("/tracker-onboarding", data);
       },
 
       addRecord: (record) => {
         const newRecord: DailyRecord = { ...record, loggedAt: new Date().toISOString() };
+        // Optimistic update — dedup on occurredOn so re-submitting a day overwrites cleanly
         set((s) => ({
           state: {
             ...s.state,
-            records: [newRecord, ...s.state.records],
+            records: [newRecord, ...s.state.records.filter((r) => r.occurredOn !== newRecord.occurredOn)],
             updatedAt: new Date().toISOString(),
           },
         }));
-        void get().saveToServer();
+        // POST individual record to daily_records table (idempotent on userId+occurredOn)
+        void api.post("/daily-records", newRecord);
       },
 
       loadFromServer: async () => {
+        set({ isSyncing: true });
         try {
-          const data = await api.get<TrackerState | null>("/tracker-state");
-          if (data) set({ state: data });
+          const [onboarding, recordsRes] = await Promise.all([
+            api.get<TrackerOnboarding | null>("/tracker-onboarding"),
+            api.get<{ records: DailyRecord[] }>("/daily-records"),
+          ]);
+          set((s) => ({
+            state: {
+              ...s.state,
+              onboarding: onboarding ?? s.state.onboarding,
+              records: recordsRes?.records ?? s.state.records,
+              updatedAt: new Date().toISOString(),
+            },
+          }));
         } catch {
-          // use local state
+          // keep local state on network failure
+        } finally {
+          set({ isSyncing: false });
         }
       },
 
+      // Syncs only the onboarding blob — individual records are written in addRecord
       saveToServer: async () => {
+        const { onboarding } = get().state;
+        if (!onboarding) return;
         set({ isSyncing: true });
         try {
-          await api.put("/tracker-state", get().state);
+          await api.put("/tracker-onboarding", onboarding);
         } catch {
           // retry on next save
         } finally {
@@ -67,7 +86,7 @@ export const useTrackerStore = create<TrackerStore>()(
       },
     }),
     {
-      name: "kothi_tracker_state",
+      name: "kothi_tracker_onboarding",
       partialize: (s) => ({ state: s.state }),
     }
   )

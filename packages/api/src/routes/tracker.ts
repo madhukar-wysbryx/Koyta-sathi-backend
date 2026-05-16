@@ -10,7 +10,7 @@ trackerRouter.use("*", requireAuth);
 trackerRouter.get("/", async (c) => {
   const { userId } = c.get("auth");
   const result = await ddb.send(
-    new GetCommand({ TableName: tableNames.trackerState, Key: { userId } })
+    new GetCommand({ TableName: tableNames.trackerOnboarding, Key: { userId } })
   );
   return c.json(result.Item ?? null);
 });
@@ -19,6 +19,6 @@ trackerRouter.put("/", async (c) => {
   const { userId } = c.get("auth");
   const body = await c.req.json();
   const item = { ...body, userId, updatedAt: new Date().toISOString() };
-  await ddb.send(new PutCommand({ TableName: tableNames.trackerState, Item: item }));
+  await ddb.send(new PutCommand({ TableName: tableNames.trackerOnboarding, Item: item }));
   return c.json(item);
 });
